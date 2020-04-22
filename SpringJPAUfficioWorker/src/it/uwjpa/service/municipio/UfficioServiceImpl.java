@@ -13,56 +13,57 @@ import org.springframework.transaction.annotation.Transactional;
 public class UfficioServiceImpl implements UfficioService {
 
 	@Autowired
-	private UfficioDAO municipioDAO;
+	private UfficioDAO ufficioDAO;
 
 	@Transactional(readOnly = true)
-	public List<Ufficio> listAllMunicipi() {
-		return municipioDAO.list();
-	}
-
-	@Transactional(readOnly = true)
-	public Ufficio caricaSingoloMunicipio(Long id) {
-		return municipioDAO.get(id);
+	public List<Ufficio> listAllUffici() {
+		return ufficioDAO.list();
 	}
 
 	@Transactional(readOnly = true)
-	public Ufficio caricaSingoloMunicipioEagerAbitanti(Long idMunicipio) {
-		return municipioDAO.findEagerFetch(idMunicipio);
+	public Ufficio caricaSingoloUfficio(Long id) {
+		return ufficioDAO.get(id);
+	}
+
+	@Transactional(readOnly = true)
+	public Ufficio caricaSingoloUfficioEagerWorkers(Long idUfficio) {
+		return ufficioDAO.findEagerFetch(idUfficio);
 	}
 
 	@Transactional
-	public void aggiorna(Ufficio municipioInstance) {
-		municipioDAO.update(municipioInstance);
+	public void aggiorna(Ufficio ufficioInstance) {
+		ufficioDAO.update(ufficioInstance);
 	}
 
 	@Transactional
-	public void inserisciNuovo(Ufficio municipioInstance) {
-		municipioDAO.insert(municipioInstance);
+	public void inserisciNuovo(Ufficio ufficioInstance) {
+		ufficioDAO.insert(ufficioInstance);
 	}
 
 	@Transactional
-	public void rimuovi(Ufficio municipioInstance) {
-		municipioDAO.delete(municipioInstance);
+	public void rimuovi(Ufficio ufficioInstance) {
+		ufficioDAO.delete(ufficioInstance);
 	}
 
 	@Transactional(readOnly = true)
 	public List<Ufficio> findByExample(Ufficio example) {
-		return municipioDAO.findByExample(example);
+		return ufficioDAO.findByExample(example);
 	}
 
 	@Transactional(readOnly = true)
-	public void refresh(Ufficio municipioInstance) {
-		municipioDAO.refresh(municipioInstance);
+	public void refresh(Ufficio ufficioInstance) {
+		ufficioDAO.refresh(ufficioInstance);
 	}
 
 	@Transactional
-	public void removeConEccezione(Ufficio municipioInstance) {
-		municipioDAO.delete(municipioInstance);
+	public void removeConEccezione(Ufficio ufficioInstance) {
+		ufficioDAO.delete(ufficioInstance);
 		throw new RuntimeException("Eccezione di prova transazione");
 	}
 
 	@Override
-	public Long countByAbitantiMinorenni() {
-		return municipioDAO.countByAbitantiMinorenni();
+	public Long countByWorkersJunior() {
+		return ufficioDAO.countByWorkersJunior();
 	}
+
 }

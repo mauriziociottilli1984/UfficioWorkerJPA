@@ -14,7 +14,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "municipio")
+@Table(name = "ufficio")
 public class Ufficio {
 
 	@Id
@@ -27,8 +27,8 @@ public class Ufficio {
 	private String codice;
 	@Column(name = "ubicazione")
 	private String ubicazione;
-	@OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST,CascadeType.MERGE}, mappedBy = "municipio", orphanRemoval = true)
-	private Set<Worker> abitanti = new HashSet<>();
+	@OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST,CascadeType.MERGE}, mappedBy = "ufficio", orphanRemoval = true)
+	private Set<Worker> workers = new HashSet<>();
 
 	public Ufficio() {
 	}
@@ -40,12 +40,12 @@ public class Ufficio {
 		this.ubicazione = ubicazione;
 	}
 
-	public Set<Worker> getAbitanti() {
-		return abitanti;
+	public Set<Worker> getWorkers() {
+		return workers;
 	}
 
-	public void setAbitanti(Set<Worker> abitanti) {
-		this.abitanti = abitanti;
+	public void setWorkers(Set<Worker> workers) {
+		this.workers = workers;
 	}
 
 	public Long getId() {
@@ -82,7 +82,7 @@ public class Ufficio {
 
 	@Override
 	public String toString() {
-		return "Municipio [id=" + id + ", descrizione=" + descrizione + ", codice=" + codice + ", ubicazione="
+		return "Ufficio [id=" + id + ", descrizione=" + descrizione + ", codice=" + codice + ", ubicazione="
 				+ ubicazione + "]";
 	}
 

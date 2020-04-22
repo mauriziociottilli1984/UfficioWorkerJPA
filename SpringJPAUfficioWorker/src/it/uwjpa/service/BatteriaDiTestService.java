@@ -14,99 +14,96 @@ import org.springframework.stereotype.Component;
 public class BatteriaDiTestService {
 
 	@Autowired
-	private UfficioService municipioService;
+	private UfficioService ufficioService;
 
 	@Autowired
-	private WorkerService abitanteService;
+	private WorkerService workerService;
 
 	// casi di test (usare valorizzando la variabile casoDaTestare nel main)
-	public static final String INSERISCI_NUOVO_MUNICIPIO = "INSERISCI_NUOVO_MUNICIPIO";
-	public static final String INSERISCI_ABITANTI_DATO_UN_MUNICIPIO = "INSERISCI_ABITANTI_DATO_UN_MUNICIPIO";
-	public static final String CERCA_ABITANTE_DATO_ID_MUNICIPIO = "CERCA_ABITANTE_DATO_ID_MUNICIPIO";
-	public static final String RIMUOVI_MUNICIPIO_E_ABITANTI = "RIMUOVI_MUNICIPIO_E_ABITANTI";
-	public static final String ELENCA_TUTTI_I_MUNICIPI = "ELENCA_TUTTI_I_MUNICIPI";
-	public static final String FIND_BY_EXAMPLE_BY_VIA = "FIND_BY_EXAMPLE_BY_VIA";
-	public static final String UPDATE_ABITANTE_SET_ETA = "UPDATE_ABITANTE_SET_ETA";
-	public static final String CARICA_MUNICIPIO_EAGER = "CARICA_MUNICIPIO_EAGER";
+	public static final String INSERISCI_NUOVO_UFFICIO = "INSERISCI_NUOVO_UFFICIO";
+	public static final String INSERISCI_WORKERS_DATO_UN_UFFICIO = "INSERISCI_WORKERS_DATO_UN_UFFICIO";
+	public static final String CERCA_WORKER_DATO_ID_UFFICIO = "CERCA_WORKER_DATO_ID_UFFICIO";
+	public static final String RIMUOVI_UFFICIO_E_WORKERS = "RIMUOVI_UFFICIO_E_WORKERS";
+	public static final String ELENCA_TUTTI_GLI_UFFICI = "ELENCA_TUTTI_GLI_UFFICI";
+	public static final String FIND_BY_EXAMPLE_BY_PIANO = "FIND_BY_EXAMPLE_BY_PIANO";
+	public static final String UPDATE_WORKER_SET_ISJUNIOR = "UPDATE_WORKER_SET_ISJUNIOR";
+	public static final String CARICA_UFFICIO_EAGER = "CARICA_UFFICIO_EAGER";
 	public static final String REMOVE_CON_ECCEZIONE_VA_IN_ROLLBACK = "REMOVE_CON_ECCEZIONE_VA_IN_ROLLBACK";
-	public static final String FIND_ALL_ABITANTE_UBICAZIONE_CONTIENE = "FIND_ALL_ABITANTE_UBICAZIONE_CONTIENE";
-	public static final String COUNT_MUNICIPI_BY_MINORENNI = "COUNT_MUNICIPI_BY_MINORENNI";
+	public static final String FIND_ALL_WORKER_UBICAZIONE_CONTIENE = "FIND_ALL_WORKER_UBICAZIONE_CONTIENE";
+	public static final String COUNT_UFFICI_BY_JUNIOR = "COUNT_UFFICI_BY_JUNIOR";
 
 	public void eseguiBatteriaDiTest(String casoDaTestare) {
 		try {
 			switch (casoDaTestare) {
-			case INSERISCI_NUOVO_MUNICIPIO:
-				// creo nuovo municipio
-				Ufficio nuovoMunicipio = new Ufficio("Municipio III",
-						"III", "Via dei Nani");
+			case INSERISCI_NUOVO_UFFICIO:
+				// creo nuovo ufficio
+				Ufficio nuovoUfficio = new Ufficio("Ufficio sinistri",
+						"Piano 3", "Sede ostia");
 				// salvo
-				municipioService.inserisciNuovo(nuovoMunicipio);
+				ufficioService.inserisciNuovo(nuovoUfficio);
 				System.out.println("Municipio appena inserito: "
-						+ nuovoMunicipio);
+						+ nuovoUfficio);
 				break;
 
-			case INSERISCI_ABITANTI_DATO_UN_MUNICIPIO:
-				// / creo nuovo abitante
-				Worker nuovoAbitante = new Worker("Pluto", "Plutorum", 77,
-						"Via Lecce");
-				nuovoAbitante.setMunicipio(municipioService
-						.caricaSingoloMunicipio(22L));
+			case INSERISCI_WORKERS_DATO_UN_UFFICIO:
+				// / creo nuovo worker
+				Worker nuovoWorker = new Worker("Pluto", "Plutorum", 77);
+				nuovoWorker.setUfficio(ufficioService.caricaSingoloUfficio(22L));
 				// salvo
-				abitanteService.inserisciNuovo(nuovoAbitante);
+				workerService.inserisciNuovo(nuovoWorker);
 				break;
 
-			case CERCA_ABITANTE_DATO_ID_MUNICIPIO:
-				// stampo gli abitanti di un determinato municipio
-				System.out.println(abitanteService
-						.cercaAbitantiInMunicipio(municipioService
-								.caricaSingoloMunicipio(22L)));
+			case CERCA_WORKER_DATO_ID_UFFICIO:
+				// stampo i workers di un determinato ufficio
+				System.out.println(workerService.
+						cercaWorkersInUfficio(ufficioService.caricaSingoloUfficio(22L)));
 				break;
 
-			case RIMUOVI_MUNICIPIO_E_ABITANTI:
-				// per cancellare tutto il municipio
-				municipioService.rimuovi(municipioService
-						.caricaSingoloMunicipio(24L));
+			case RIMUOVI_UFFICIO_E_WORKERS:
+				// per cancellare tutto l'ufficio
+				ufficioService.rimuovi(ufficioService
+						.caricaSingoloUfficio(24L));
 				break;
 
-			case ELENCA_TUTTI_I_MUNICIPI:
-				// elencare i municipi
-				System.out.println("Elenco i municipi:");
-				for (Ufficio municipioItem : municipioService
-						.listAllMunicipi()) {
-					System.out.println(municipioItem);
+			case ELENCA_TUTTI_GLI_UFFICI:
+				// elencare gli uffici
+				System.out.println("Elenco gli uffici:");
+				for (Ufficio ufficioItem : ufficioService
+						.listAllUffici()) {
+					System.out.println(ufficioItem);
 				}
 				break;
 
-			case FIND_BY_EXAMPLE_BY_VIA:
+			case FIND_BY_EXAMPLE_BY_PIANO:
 				System.out
 						.println("########### EXAMPLE ########################");
 				// find by example: voglio ricercare i municipi con
 				// ubicazione'Via dei Grandi'
-				Ufficio municipioExample = new Ufficio();
-				municipioExample.setUbicazione("Via dei Nani");
-				for (Ufficio municipioItem : municipioService
-						.findByExample(municipioExample)) {
-					System.out.println(municipioItem);
+				Ufficio ufficioExample = new Ufficio();
+				ufficioExample.setUbicazione("Quarto piano");
+				for (Ufficio ufficioItem : ufficioService
+						.findByExample(ufficioExample)) {
+					System.out.println(ufficioItem);
 				}
 				break;
 
-			case UPDATE_ABITANTE_SET_ETA:
-				// carico un abitante e cambio eta
-				Worker abitanteEsistente = abitanteService
-						.caricaSingoloAbitante(14L);
-				if (abitanteEsistente != null) {
-					abitanteEsistente.setEta(50);
-					abitanteService.aggiorna(abitanteEsistente);
+			case UPDATE_WORKER_SET_ISJUNIOR:
+				// carico un worker e cambio eta
+				Worker workerEsistente = workerService
+						.caricaSingoloWorker(14L);
+				if (workerEsistente != null) {
+					workerEsistente.setJunior(true);
+					workerService.aggiorna(workerEsistente);
 				}
 				break;
 
-			case CARICA_MUNICIPIO_EAGER:
+			case CARICA_UFFICIO_EAGER:
 				// quando carico un Municipio ho già i suoi abitanti
-				Ufficio municipioACaso = municipioService
-						.caricaSingoloMunicipioEagerAbitanti(23L);
-				if (municipioACaso != null) {
-					for (Worker abitanteItem : municipioACaso.getAbitanti()) {
-						System.out.println(abitanteItem);
+				Ufficio ufficioACaso = ufficioService
+						.caricaSingoloUfficioEagerWorkers(23L);
+				if (ufficioACaso != null) {
+					for (Worker workerItem : ufficioACaso.getWorkers()) {
+						System.out.println(workerItem);
 					}
 				}
 				break;
@@ -114,28 +111,28 @@ public class BatteriaDiTestService {
 			case REMOVE_CON_ECCEZIONE_VA_IN_ROLLBACK:
 				// Test transaction rollback provando a cancellare l'ultimo
 				// inserito
-				List<Ufficio> allMunicipi = municipioService
-						.listAllMunicipi();
-				System.out.println("...size before..." + allMunicipi.size());
+				List<Ufficio> allUffici = ufficioService
+						.listAllUffici();
+				System.out.println("...size before..." + allUffici.size());
 				try {
-					Ufficio ultimoInserito = allMunicipi.get(allMunicipi
+					Ufficio ultimoInserito = allUffici.get(allUffici
 							.size() - 1);
 
-					municipioService.removeConEccezione(ultimoInserito);
+					ufficioService.removeConEccezione(ultimoInserito);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 
-				allMunicipi = municipioService.listAllMunicipi();
-				System.out.println("...size after..." + allMunicipi.size());
+				allUffici = ufficioService.listAllUffici();
+				System.out.println("...size after..." + allUffici.size());
 				break;
-
-			case FIND_ALL_ABITANTE_UBICAZIONE_CONTIENE:
+				/*
+			case FIND_ALL_WORKER_UBICAZIONE_CONTIENE:
 				System.out
-						.println("########### FIND_ALL_ABITANTE_UBICAZIONE_CONTIENE ########################");
+						.println("########### FIND_ALL_WORKER_UBICAZIONE_CONTIENE ########################");
 
-				for (Worker abitanteItem : abitanteService
-						.cercaAbitantiInMunicipioConUbicazioneContiene("cani")) {
+				for (Worker workerItem : workerService
+						.cercaWorkersInUfficioConUbicazioneContiene(ubicazioneToken)"cani")) {
 					System.out.println(abitanteItem);
 				}
 				break;
@@ -144,6 +141,7 @@ public class BatteriaDiTestService {
 				.println("########### COUNT_MUNICIPI_BY_MINORENNI ########################");
 				System.out.println("ci sono "+ municipioService.countByAbitantiMinorenni() + " municipi con minorenni");
 				break;
+				*/
 			}
 
 		} catch (Exception e) {

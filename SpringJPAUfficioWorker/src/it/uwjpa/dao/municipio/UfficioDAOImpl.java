@@ -25,7 +25,7 @@ public class UfficioDAOImpl implements UfficioDAO {
 		// dopo la from bisogna specificare il nome dell'oggetto (lettera
 		// maiuscola) e
 		// non la tabella
-		return entityManager.createQuery("from Municipio").getResultList();
+		return entityManager.createQuery("from Ufficio").getResultList();
 	}
 
 	@Override
@@ -34,46 +34,47 @@ public class UfficioDAOImpl implements UfficioDAO {
 	}
 
 	@Override
-	public Ufficio findEagerFetch(long idMunicipio) {
-		Query q = entityManager.createQuery("SELECT m FROM Municipio m JOIN FETCH m.abitanti a WHERE m.id = :id");
-		q.setParameter("id", idMunicipio);
+	public Ufficio findEagerFetch(long idUfficio) {
+		Query q = entityManager.
+				createQuery("SELECT m FROM Ufficio m JOIN FETCH m.workers a WHERE m.id = :id");
+		q.setParameter("id", idUfficio);
 		return (Ufficio) q.getSingleResult();
 	}
 
 	@Override
-	public void update(Ufficio municipioInstance) {
-		municipioInstance = entityManager.merge(municipioInstance);
+	public void update(Ufficio ufficioInstance) {
+		ufficioInstance = entityManager.merge(ufficioInstance);
 	}
 
 	@Override
-	public void insert(Ufficio municipioInstance) {
-		entityManager.persist(municipioInstance);
+	public void insert(Ufficio ufficioInstance) {
+		entityManager.persist(ufficioInstance);
 	}
 
 	@Override
-	public void delete(Ufficio municipioInstance) {
-		entityManager.remove(entityManager.merge(municipioInstance));
+	public void delete(Ufficio ufficioInstance) {
+		entityManager.remove(entityManager.merge(ufficioInstance));
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Ufficio> findByExample(Ufficio municipioInstance) {
+	public List<Ufficio> findByExample(Ufficio ufficioInstance) {
 		Session session = (Session) entityManager.getDelegate();
-		Example municipioExample = Example.create(municipioInstance)
+		Example ufficioExample = Example.create(ufficioInstance)
 				.excludeZeroes();
 		Criteria criteria = session.createCriteria(Ufficio.class).add(
-				municipioExample);
+				ufficioExample);
 		return criteria.list();
 	}
 
 	@Override
-	public void refresh(Ufficio municipioInstance) {
-		entityManager.refresh(entityManager.merge(municipioInstance));
+	public void refresh(Ufficio ufficioInstance) {
+		entityManager.refresh(entityManager.merge(ufficioInstance));
 	}
 
 	@Override
-	public Long countByAbitantiMinorenni() {
-		Query q = entityManager.createQuery("SELECT count(m) from Municipio m where m in ( select distinct m from Municipio m join m.abitanti a where a.eta < 18 ) ");
+	public Long countByWorkersJunior() {
+		Query q = entityManager.createQuery("SELECT count(m) from Ufficio m where m in ( select distinct m from Ufficio m join m.workers a where a.isJunior = 1 ) ");
 		Object result =  q.getSingleResult();
 		return (Long)result;
 	}

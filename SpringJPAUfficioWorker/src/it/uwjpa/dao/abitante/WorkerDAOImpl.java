@@ -23,7 +23,7 @@ public class WorkerDAOImpl implements WorkerDAO {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Worker> list() {
-		return entityManager.createQuery("from Abitante").getResultList();
+		return entityManager.createQuery("from Worker").getResultList();
 	}
 
 	@Override
@@ -32,8 +32,8 @@ public class WorkerDAOImpl implements WorkerDAO {
 	}
 
 	@Override
-	public void update(Worker abitanteInstance) {
-		abitanteInstance = entityManager.merge(abitanteInstance);
+	public void update(Worker workerInstance) {
+		workerInstance = entityManager.merge(workerInstance);
 	}
 
 	@Override
@@ -63,7 +63,7 @@ public class WorkerDAOImpl implements WorkerDAO {
 	}
 
 	@Override
-	public List<Worker> findAllByMunicipio(Ufficio input) {
+	public List<Worker> findAllByUfficio(Ufficio input) {
 		TypedQuery<Worker> query = entityManager
 				.createQuery(
 						"select u FROM Abitante u JOIN FETCH u.municipio where u.municipio =:municipioInput",
@@ -72,11 +72,11 @@ public class WorkerDAOImpl implements WorkerDAO {
 	}
 
 	@Override
-	public List<Worker> findAllByUbicazioneMunicipioContiene(
+	public List<Worker> findAllByUbicazioneUfficioContiene(
 			String ubicazioneToken) {
 		TypedQuery<Worker> query = entityManager
 				.createQuery(
-						"select u FROM Abitante u JOIN FETCH u.municipio m where m.ubicazione like :ubicazioneInput",
+						"select u FROM Worker u JOIN FETCH u.ufficio m where m.ufficio like :ufficioInput",
 						Worker.class);
 		return (List<Worker>) query.setParameter("ubicazioneInput",
 				'%' + ubicazioneToken + '%').getResultList();

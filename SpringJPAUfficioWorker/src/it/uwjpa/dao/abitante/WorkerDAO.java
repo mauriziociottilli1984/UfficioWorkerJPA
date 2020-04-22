@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface WorkerDAO extends IBaseDAO<Worker> {
 
-	public List<Worker> findAllByMunicipio(Ufficio input);
-	public List<Worker> findAllByUbicazioneMunicipioContiene(String ubicazioneToken);
+	public List<Worker> findAllByUfficio(Ufficio input);
+	public List<Worker> findAllByUbicazioneUfficioContiene(String ubicazioneToken);
 	
 }

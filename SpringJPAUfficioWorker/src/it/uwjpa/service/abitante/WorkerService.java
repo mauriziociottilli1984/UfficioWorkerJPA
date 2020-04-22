@@ -7,22 +7,22 @@ import it.uwjpa.model.Ufficio;
 
 public interface WorkerService {
 
-	public List<Worker> listAllAbitanti();
+	public List<Worker> listAllWorkers();
 
-	public Worker caricaSingoloAbitante(Long id);
+	public Worker caricaSingoloWorker(Long id);
 
-	public void aggiorna(Worker abitanteInstance);
+	public void aggiorna(Worker workerInstance);
 
-	public void inserisciNuovo(Worker abitanteInstance);
+	public void inserisciNuovo(Worker workerInstance);
 
-	public void rimuovi(Worker abitanteInstance);
+	public void rimuovi(Worker workerInstance);
 
 	public List<Worker> findByExample(Worker example);
 	
-	public void refresh(Worker abitanteInstance);
+	public void refresh(Worker workerInstance);
 	
-	public List<Worker> cercaAbitantiInMunicipio(Ufficio input);
+	public List<Worker> cercaWorkersInUfficio(Ufficio input);
 	
-	public List<Worker> cercaAbitantiInMunicipioConUbicazioneContiene(String ubicazioneToken);
+	public List<Worker> cercaWorkersInUfficioConUbicazioneContiene(String ubicazioneToken);
 
 }

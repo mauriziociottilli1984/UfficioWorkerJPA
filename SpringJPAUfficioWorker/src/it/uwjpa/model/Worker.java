@@ -11,7 +11,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "abitante")
+@Table(name = "worker")
 public class Worker {
 
 	@Id
@@ -24,22 +24,22 @@ public class Worker {
 	private String cognome;
 	@Column(name = "eta")
 	private int eta;
-	@Column(name = "residenza")
-	private String residenza;
+	@Column(name = "isJunior")
+	private boolean isJunior;
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "municipio_id", nullable = false)
-	private Ufficio municipio;
+	@JoinColumn(name = "ufficio_id", nullable = false)
+	private Ufficio ufficio;
 
 	public Worker() {
 
 	}
 
-	public Worker(String nome, String cognome, int eta, String residenza) {
+	public Worker(String nome, String cognome, int eta) {
 		super();
 		this.nome = nome;
 		this.cognome = cognome;
 		this.eta = eta;
-		this.residenza = residenza;
+		this.isJunior = true;
 	}
 
 	public Long getId() {
@@ -74,26 +74,26 @@ public class Worker {
 		this.eta = eta;
 	}
 
-	public String getResidenza() {
-		return residenza;
+	public boolean getJunior(){
+		return this.isJunior;
 	}
 
-	public void setResidenza(String residenza) {
-		this.residenza = residenza;
+	public void setJunior(boolean isJunior) {
+		this.isJunior = isJunior;
 	}
 
-	public Ufficio getMunicipio() {
-		return municipio;
+	public Ufficio getUfficio() {
+		return this.ufficio;
 	}
 
-	public void setMunicipio(Ufficio municipio) {
-		this.municipio = municipio;
+	public void setUfficio(Ufficio ufficio) {
+		this.ufficio = ufficio;
 	}
 
 	@Override
 	public String toString() {
-		return "Abitante [id=" + id + ", nome=" + nome + ", cognome=" + cognome + ", eta=" + eta + ", residenza="
-				+ residenza + ", municipio=" + municipio + "]";
+		return "Worker [id=" + id + ", nome=" + nome + ", cognome=" + cognome + ", eta=" + eta + ", isJunior="
+				+ isJunior + ", ufficio=" + ufficio + "]";
 	}
 
 }

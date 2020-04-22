@@ -6,23 +6,23 @@ import it.uwjpa.model.Ufficio;
 
 public interface UfficioService {
 
-	public List<Ufficio> listAllMunicipi();
+	public List<Ufficio> listAllUffici();
 
-	public Ufficio caricaSingoloMunicipio(Long id);
+	public Ufficio caricaSingoloUfficio(Long id);
 
-	public Ufficio caricaSingoloMunicipioEagerAbitanti(Long idMunicipio);
+	public Ufficio caricaSingoloUfficioEagerWorkers(Long idUfficio);
 
-	public void aggiorna(Ufficio municipioInstance);
+	public void aggiorna(Ufficio ufficioInstance);
 
-	public void inserisciNuovo(Ufficio municipioInstance);
+	public void inserisciNuovo(Ufficio ufficioInstance);
 
-	public void rimuovi(Ufficio municipioInstance);
+	public void rimuovi(Ufficio ufficioInstance);
 
 	public List<Ufficio> findByExample(Ufficio example);
 
-	public void refresh(Ufficio municipioInstance);
+	public void refresh(Ufficio ufficioInstance);
 
-	public void removeConEccezione(Ufficio municipioInstance);
+	public void removeConEccezione(Ufficio ufficioInstance);
 	
-	public Long countByAbitantiMinorenni();
+	public Long countByWorkersJunior();
 }
